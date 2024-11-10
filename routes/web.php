@@ -4,6 +4,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Models\Book; //buat import modelnya
 use App\Models\Category;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,7 +22,7 @@ Route::get('/', function () {
         "title" => "Home",
         "books" => Book::all(),
         'categories' => Category::all(),
-        "books" => Book::filter(request(['search', 'category']))->latest()->paginate(8)->withQueryString() //scope, order by, get
+        "books" => Book::filter(request(['search', 'category', 'author']))->latest()->paginate(8)->withQueryString() //scope, order by, get
     ]);
 });
 
@@ -29,6 +30,13 @@ Route::get('/home/{book}', function (Book $book) {
     return view('book', [
         "title" => "Book",
         "book" => $book
+    ]);
+});
+
+Route::get('/authors/{user}', function (User $user) {
+    return view('home', [
+        "title" => "Books by" . $user->name,
+        "books" => $user->books
     ]);
 });
 

@@ -28,6 +28,10 @@
             @if (request('category'))
                 <input type="hidden" name='category' value="{{ request('category') }}">
             @endif
+
+            @if (request('author'))
+                <input type="hidden" name="author" value="{{ request('author') }}">
+            @endif
             <div class="icon-plus-search position-relative w-100 me-2">
                 <i class="bi bi-search position-absolute ps-1"
                     style="left: 10px; top: 50%; transform: translateY(-50%); color: #888;"></i>
@@ -52,7 +56,9 @@
                         <div class="card-body mt-2">
                             <h5 class="card-title fw-bold">{{ Str::limit($book['title'], 20) }}</h5>
                             <p class="card-category text-secondary"><a style="color:#888"
-                                    href="/?category={{ $book->category->slug }}">{{ $book->category->name }}</a></p>
+                                    href="/?category={{ $book->category->slug }}">{{ $book->category->name }}</a> | <a
+                                    href="/?author={{ $book->author->username }}"
+                                    style="color:#888">{{ $book->author->name }}</a></p>
                             <p class="card-text">{{ Str::limit($book['description'], 80) }}</p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <span class="card-price fw-bold" style="color: green">Rp.{{ $book['price'] }}</span>

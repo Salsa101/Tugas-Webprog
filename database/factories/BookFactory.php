@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Category;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -38,6 +39,7 @@ class BookFactory extends Factory
         return [
             'image' => $images[fake()->numberBetween(1, 15)],
             'category_id' => Category::inRandomOrder()->first()->id,
+            'author_id' => User::factory(),
             'title' => fake()->sentence(4, false),
             'price' => fake()->randomNumber(5, true),
             'description' => fake()->sentence(100, false)

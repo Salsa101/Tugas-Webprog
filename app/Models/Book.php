@@ -19,6 +19,10 @@ class Book extends Model{ //terhubung ke tabel books
         return $this->belongsTo(Category::class); //1 produk punya 1 kategori
     }
 
+    public function author(){
+        return $this->belongsTo(User::class); //1 produk punya 1 kategori
+    }
+
     public function scopeFilter(Builder $query, array $filters):void{ //filters biar tau lg filter apa
         $query->when(
             $filters['search'] ?? false,
@@ -31,6 +35,13 @@ class Book extends Model{ //terhubung ke tabel books
             fn($query, $category) =>
             $query->whereHas('category', fn($query) =>
             $query->where('slug', $category))
+        );
+
+        $query->when(
+            $filters['author'] ?? false,
+            fn($query, $author) =>
+            $query->whereHas('author', fn($query) =>
+            $query->where('username', $author))
         );
     }
 }
